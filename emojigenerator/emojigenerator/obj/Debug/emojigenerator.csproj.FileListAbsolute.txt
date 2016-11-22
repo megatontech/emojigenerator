@@ -1,1 +1,11 @@
 C:\Github\emojigenerator\emojigenerator\emojigenerator\bin\Debug\emojigenerator.exe.config
+C:\Github\emojigenerator\emojigenerator\emojigenerator\bin\Debug\emojigenerator.exe
+C:\Github\emojigenerator\emojigenerator\emojigenerator\bin\Debug\emojigenerator.pdb
+C:\Github\emojigenerator\emojigenerator\emojigenerator\obj\Debug\emojigenerator.csprojResolveAssemblyReference.cache
+C:\Github\emojigenerator\emojigenerator\emojigenerator\obj\Debug\emojigenerator.UCCU.resources
+C:\Github\emojigenerator\emojigenerator\emojigenerator\obj\Debug\emojigenerator.Properties.Resources.resources
+C:\Github\emojigenerator\emojigenerator\emojigenerator\obj\Debug\emojigenerator.csproj.GenerateResource.Cache
+C:\Github\emojigenerator\emojigenerator\emojigenerator\obj\Debug\emojigenerator.exe
+C:\Github\emojigenerator\emojigenerator\emojigenerator\obj\Debug\emojigenerator.pdb
+C:\Github\emojigenerator\emojigenerator\emojigenerator\bin\Debug\Images\Delete.png
+C:\Github\emojigenerator\emojigenerator\emojigenerator\bin\Debug\Images\Save.png
