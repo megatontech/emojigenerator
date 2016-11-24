@@ -5,8 +5,15 @@ using System.Windows.Forms;
 
 namespace emojigenerator
 {
+    
     public partial class UCCU : Form
     {
+        private FormTextLabel label1 = new FormTextLabel();
+        private FormTextLabel label2 = new FormTextLabel();
+        private FormTextLabel label3 = new FormTextLabel();
+        private bool isDrag = false;
+        private Control currentMoveControl = new Control();
+        private Point currcur = new Point();
         public UCCU()
         {
             InitializeComponent();
@@ -37,9 +44,9 @@ namespace emojigenerator
             if (pictureBox1.Image != null)
             {
                 Bitmap bmp = new Bitmap(pictureBox1.Image);
-                if (this.Jpeg.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0,4) + ".jpg", ImageFormat.Jpeg); }
-                if (this.Gif.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0,4) + ".gif", ImageFormat.Gif); }
-                if (this.Png.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0,4) + ".png", ImageFormat.Png); }
+                if (this.Jpeg.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".jpg", ImageFormat.Jpeg); }
+                if (this.Gif.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".gif", ImageFormat.Gif); }
+                if (this.Png.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".png", ImageFormat.Png); }
                 if (this.Bmp.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".bmp", ImageFormat.Bmp); }
             }
         }
@@ -65,8 +72,64 @@ namespace emojigenerator
             e.Effect = DragDropEffects.Copy;
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            TextLabel1.Text = this.textBox1.Text.Trim();
+            label1.text = this.textBox1.Text.Trim();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            TextLabel2.Text = this.textBox2.Text.Trim();
+            label2.text = this.textBox2.Text.Trim();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            TextLabel3.Text = this.textBox3.Text.Trim();
+            label3.text = this.textBox3.Text.Trim();
+        }
+
+        private void UCCU_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDrag = true;
+            
+
+            if (sender is Label) { ((Label)sender).BackColor = Color.DarkRed; currentMoveControl = ((Label)sender); }
+            currcur.X = currentMoveControl.Location.X;
+            currcur.Y = currentMoveControl.Location.Y;
+        }
+
+        private void UCCU_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDrag = false;
+            //currentMoveControl.Location = currcur;
+            if(currentMoveControl.Name.Contains("1")){TextLabel1.Location = getPointToForm(new Point(e.Location.X - currcur.X, e.Location.Y - currcur.Y)); label1.xPos = currcur.X;label1.yPos = currcur.Y; }
+            if(currentMoveControl.Name.Contains("2")){ label2.xPos = currcur.X; label2.yPos = currcur.Y; }
+            if (currentMoveControl.Name.Contains("3")){ label3.xPos = currcur.X; label3.yPos = currcur.Y; }
+            this.Refresh();
+        }
+
+        private void UCCU_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button==MouseButtons.Left)
+            {
+                Point pTemp = new Point(Cursor.Position.X, Cursor.Position.Y);
+                pTemp = this.PointToClient(pTemp);
+                currentMoveControl.Location = new Point(pTemp.X - currcur.X, pTemp.Y - currcur.Y);
+
+                this.Refresh();
+            }
+        }
+
         #region Methods
 
+        private Point getPointToForm(Point p)
+        {
+            //return this.PointToClient(currentMoveControl.PointToScreen(p));
+            return currentMoveControl.PointToScreen(p);
+        }
+        
         /// <summary>
         /// 销毁
         /// </summary>
@@ -119,6 +182,23 @@ namespace emojigenerator
             return oldImage;
         }
 
+
         #endregion Methods
+
+        
     }
+    /// <summary>
+    /// 显示文本
+    /// </summary>
+    public class FormTextLabel
+    {
+        public string font { get; set; }
+        public bool isVertical { get; set; }
+        public int opcaity { get; set; }
+        public int size { get; set; }
+        public string text { get; set; }
+        public int xPos { get; set; }
+        public int yPos { get; set; }
+    }
+
 }
