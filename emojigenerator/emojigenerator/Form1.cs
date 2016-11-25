@@ -14,6 +14,7 @@ namespace emojigenerator
         private bool isDrag = false;
         private Control currentMoveControl = new Control();
         private Point currcur = new Point();
+        private Point oldcur = new Point();
         public UCCU()
         {
             InitializeComponent();
@@ -92,21 +93,25 @@ namespace emojigenerator
 
         private void UCCU_MouseDown(object sender, MouseEventArgs e)
         {
-            isDrag = true;
-            
-
+            isDrag = true; currcur = new Point(e.X, e.Y);
             if (sender is Label) { ((Label)sender).BackColor = Color.DarkRed; currentMoveControl = ((Label)sender); }
-            currcur.X = currentMoveControl.Location.X;
-            currcur.Y = currentMoveControl.Location.Y;
+            currcur = currentMoveControl.Location ;
+            oldcur = e.Location;
         }
 
         private void UCCU_MouseUp(object sender, MouseEventArgs e)
         {
             isDrag = false;
-            //currentMoveControl.Location = currcur;
-            if(currentMoveControl.Name.Contains("1")){TextLabel1.Location = getPointToForm(new Point(e.Location.X - currcur.X, e.Location.Y - currcur.Y)); label1.xPos = currcur.X;label1.yPos = currcur.Y; }
-            if(currentMoveControl.Name.Contains("2")){ label2.xPos = currcur.X; label2.yPos = currcur.Y; }
-            if (currentMoveControl.Name.Contains("3")){ label3.xPos = currcur.X; label3.yPos = currcur.Y; }
+            currcur = new Point((Cursor.Position.X), (Cursor.Position.Y));
+            Label l = new Label();
+            l.Location = currcur;
+            this.Controls.Add(l);
+            l.Text = currentMoveControl.Text+"~!!";
+            if (currentMoveControl.Name.Contains("1")) { TextLabel1.Location = currcur; label1.xPos = currcur.X; label1.yPos = currcur.Y; }
+            if (currentMoveControl.Name.Contains("2")) { TextLabel2.Location = currcur; label2.xPos = currcur.X; label2.yPos = currcur.Y; }
+            if (currentMoveControl.Name.Contains("3")) { TextLabel3.Location = currcur; label3.xPos = currcur.X; label3.yPos = currcur.Y; }
+            currcur.X = currentMoveControl.Location.X;
+            currcur.Y = currentMoveControl.Location.Y;
             this.Refresh();
         }
 
@@ -126,8 +131,7 @@ namespace emojigenerator
 
         private Point getPointToForm(Point p)
         {
-            //return this.PointToClient(currentMoveControl.PointToScreen(p));
-            return currentMoveControl.PointToScreen(p);
+            return p;
         }
         
         /// <summary>
