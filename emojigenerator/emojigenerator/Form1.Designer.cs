@@ -32,10 +32,10 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TextLabel3 = new System.Windows.Forms.Label();
             this.TextLabel2 = new System.Windows.Forms.Label();
+            this.TextLabel1 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.TextLabel1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -72,11 +72,12 @@
             // 
             this.TextLabel3.AutoSize = true;
             this.TextLabel3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TextLabel3.Location = new System.Drawing.Point(135, 96);
+            this.TextLabel3.Location = new System.Drawing.Point(141, 96);
             this.TextLabel3.Name = "TextLabel3";
             this.TextLabel3.Size = new System.Drawing.Size(35, 12);
             this.TextLabel3.TabIndex = 8;
             this.TextLabel3.Text = "*****";
+            this.TextLabel3.Click += new System.EventHandler(this.TextLabel3_Click);
             this.TextLabel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseDown);
             this.TextLabel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseMove);
             this.TextLabel3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseUp);
@@ -85,14 +86,30 @@
             // 
             this.TextLabel2.AutoSize = true;
             this.TextLabel2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TextLabel2.Location = new System.Drawing.Point(135, 54);
+            this.TextLabel2.Location = new System.Drawing.Point(141, 54);
             this.TextLabel2.Name = "TextLabel2";
             this.TextLabel2.Size = new System.Drawing.Size(35, 12);
             this.TextLabel2.TabIndex = 7;
             this.TextLabel2.Text = "*****";
+            this.TextLabel2.Click += new System.EventHandler(this.TextLabel2_Click);
             this.TextLabel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseDown);
             this.TextLabel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseMove);
             this.TextLabel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseUp);
+            // 
+            // TextLabel1
+            // 
+            this.TextLabel1.AllowDrop = true;
+            this.TextLabel1.AutoSize = true;
+            this.TextLabel1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TextLabel1.Location = new System.Drawing.Point(141, 14);
+            this.TextLabel1.Name = "TextLabel1";
+            this.TextLabel1.Size = new System.Drawing.Size(35, 12);
+            this.TextLabel1.TabIndex = 6;
+            this.TextLabel1.Text = "*****";
+            this.TextLabel1.Click += new System.EventHandler(this.TextLabel1_Click);
+            this.TextLabel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseDown);
+            this.TextLabel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseMove);
+            this.TextLabel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseUp);
             // 
             // textBox3
             // 
@@ -118,20 +135,6 @@
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // TextLabel1
-            // 
-            this.TextLabel1.AllowDrop = true;
-            this.TextLabel1.AutoSize = true;
-            this.TextLabel1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TextLabel1.Location = new System.Drawing.Point(141, 14);
-            this.TextLabel1.Name = "TextLabel1";
-            this.TextLabel1.Size = new System.Drawing.Size(35, 12);
-            this.TextLabel1.TabIndex = 6;
-            this.TextLabel1.Text = "*****";
-            this.TextLabel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseDown);
-            this.TextLabel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseMove);
-            this.TextLabel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseUp);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.pictureBox1);
@@ -152,6 +155,8 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragDrop);
             this.pictureBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragEnter);
+            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             // 
             // groupBox3
             // 
@@ -259,8 +264,6 @@
             this.Name = "UCCU";
             this.ShowIcon = false;
             this.Text = "UCCU";
-            //this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UCCU_DragDrop);
-           // this.DragEnter += new System.Windows.Forms.DragEventHandler(this.UCCU_DragEnter);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UCCU_MouseUp);

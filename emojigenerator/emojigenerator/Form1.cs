@@ -8,13 +8,11 @@ namespace emojigenerator
     
     public partial class UCCU : Form
     {
-        private FormTextLabel label1 = new FormTextLabel();
-        private FormTextLabel label2 = new FormTextLabel();
-        private FormTextLabel label3 = new FormTextLabel();
-        private bool isDrag = false;
-        private Control currentMoveControl = new Control();
-        private Point currcur = new Point();
-        private Point oldcur = new Point();
+        private FormTextLabel label1 = new FormTextLabel() { font= "Verdana", color = Color.Black, size = 16, xPos = 0f,yPos=0f,text="" };
+        private FormTextLabel label2 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
+        private FormTextLabel label3 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
+        private Control currentSelLabel = new Control();
+
         public UCCU()
         {
             InitializeComponent();
@@ -32,6 +30,10 @@ namespace emojigenerator
         private void button1_Click(object sender, EventArgs e)
         {
             DisposeImage();
+            currentSelLabel = new Control();
+            label1 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
+            label2 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
+            label3 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
         }
 
         /// <summary>
@@ -44,11 +46,40 @@ namespace emojigenerator
             string dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             if (pictureBox1.Image != null)
             {
-                Bitmap bmp = new Bitmap(pictureBox1.Image);
+                System.Drawing.Image image = pictureBox1.Image;
+                if (label1.text.Trim().Length > 0 && label1.xPos > 0 && label1.yPos > 0)
+                {
+                    Graphics g = Graphics.FromImage(image);
+                    g.DrawImage(image, 0, 0, image.Width, image.Height);
+                    Font f = new Font(label1.font, label1.size);
+                    Brush b = new SolidBrush(label1.color);
+                    g.DrawString(label1.text.Trim(), f, b, label1.xPos, label1.yPos);
+                    g.Dispose();
+                }
+                if (label2.text.Trim().Length > 0 && label2.xPos > 0 && label2.yPos > 0)
+                {
+                    Graphics g = Graphics.FromImage(image);
+                    g.DrawImage(image, 0, 0, image.Width, image.Height);
+                    Font f = new Font(label2.font, label2.size);
+                    Brush b = new SolidBrush(label2.color);
+                    g.DrawString(label2.text.Trim(), f, b, label2.xPos, label2.yPos);
+                    g.Dispose();
+                }
+                if (label3.text.Trim().Length > 0 && label3.xPos>0&& label3.yPos>0)
+                {
+                    Graphics g = Graphics.FromImage(image);
+                    g.DrawImage(image, 0, 0, image.Width, image.Height);
+                    Font f = new Font(label3.font, label3.size);
+                    Brush b = new SolidBrush(label3.color);
+                    g.DrawString(label3.text.Trim(), f, b, label3.xPos, label3.yPos);
+                    g.Dispose();
+                }
+                Bitmap bmp = new Bitmap(image);
                 if (this.Jpeg.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".jpg", ImageFormat.Jpeg); }
                 if (this.Gif.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".gif", ImageFormat.Gif); }
                 if (this.Png.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".png", ImageFormat.Png); }
                 if (this.Bmp.Checked) { bmp.Save(dir + "\\" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 4) + ".bmp", ImageFormat.Bmp); }
+                MessageBox.Show("(＾o＾)ﾉ");
             }
         }
 
@@ -93,46 +124,42 @@ namespace emojigenerator
 
         private void UCCU_MouseDown(object sender, MouseEventArgs e)
         {
-            isDrag = true; currcur = new Point(e.X, e.Y);
-            if (sender is Label) { ((Label)sender).BackColor = Color.DarkRed; currentMoveControl = ((Label)sender); }
-            currcur = currentMoveControl.Location ;
-            oldcur = e.Location;
+            //isDrag = true; currcur = new Point(e.X, e.Y);
+            //if (sender is Label) { ((Label)sender).BackColor = Color.DarkRed; currentMoveControl = ((Label)sender); }
+            //currcur = currentMoveControl.Location ;
+            //oldcur = e.Location;
         }
 
         private void UCCU_MouseUp(object sender, MouseEventArgs e)
         {
-            isDrag = false;
-            currcur = new Point((Cursor.Position.X), (Cursor.Position.Y));
-            Label l = new Label();
-            l.Location = currcur;
-            this.Controls.Add(l);
-            l.Text = currentMoveControl.Text+"~!!";
-            if (currentMoveControl.Name.Contains("1")) { TextLabel1.Location = currcur; label1.xPos = currcur.X; label1.yPos = currcur.Y; }
-            if (currentMoveControl.Name.Contains("2")) { TextLabel2.Location = currcur; label2.xPos = currcur.X; label2.yPos = currcur.Y; }
-            if (currentMoveControl.Name.Contains("3")) { TextLabel3.Location = currcur; label3.xPos = currcur.X; label3.yPos = currcur.Y; }
-            currcur.X = currentMoveControl.Location.X;
-            currcur.Y = currentMoveControl.Location.Y;
-            this.Refresh();
+            //isDrag = false;
+            //currcur = new Point((Cursor.Position.X), (Cursor.Position.Y));
+            //Label l = new Label();
+            //l.Location = currcur;
+            //this.Controls.Add(l);
+            //l.Text = currentMoveControl.Text+"~!!";
+            //if (currentMoveControl.Name.Contains("1")) { TextLabel1.Location = currcur; label1.xPos = currcur.X; label1.yPos = currcur.Y; }
+            //if (currentMoveControl.Name.Contains("2")) { TextLabel2.Location = currcur; label2.xPos = currcur.X; label2.yPos = currcur.Y; }
+            //if (currentMoveControl.Name.Contains("3")) { TextLabel3.Location = currcur; label3.xPos = currcur.X; label3.yPos = currcur.Y; }
+            //currcur.X = currentMoveControl.Location.X;
+            //currcur.Y = currentMoveControl.Location.Y;
+            //this.Refresh();
         }
 
         private void UCCU_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button==MouseButtons.Left)
-            {
-                Point pTemp = new Point(Cursor.Position.X, Cursor.Position.Y);
-                pTemp = this.PointToClient(pTemp);
-                currentMoveControl.Location = new Point(pTemp.X - currcur.X, pTemp.Y - currcur.Y);
+            //if (e.Button==MouseButtons.Left)
+            //{
+            //    Point pTemp = new Point(Cursor.Position.X, Cursor.Position.Y);
+            //    pTemp = this.PointToClient(pTemp);
+            //    currentMoveControl.Location = new Point(pTemp.X - currcur.X, pTemp.Y - currcur.Y);
 
-                this.Refresh();
-            }
+            //    this.Refresh();
+            //}
         }
 
         #region Methods
-
-        private Point getPointToForm(Point p)
-        {
-            return p;
-        }
+        
         
         /// <summary>
         /// 销毁
@@ -187,22 +214,79 @@ namespace emojigenerator
         }
 
 
-        #endregion Methods
 
-        
+        #endregion Methods
+        /// <summary>
+        /// set current sel label position
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (currentSelLabel.Name == this.TextLabel1.Name)
+            {
+                label1.xPos = float.Parse(e.X.ToString());
+                label1.yPos = float.Parse(e.Y.ToString());
+                TextLabel1.BackColor = Color.Green;
+            }
+            if (currentSelLabel.Name == this.TextLabel2.Name)
+            {
+                currentSelLabel = this.TextLabel2;
+                label2.xPos = float.Parse(e.X.ToString());
+                label2.yPos = float.Parse(e.Y.ToString());
+                TextLabel2.BackColor = Color.Green;
+            }
+            if (currentSelLabel.Name == this.TextLabel3.Name)
+            {
+                currentSelLabel = this.TextLabel3;
+                label3.xPos = float.Parse(e.X.ToString());
+                label3.yPos = float.Parse(e.Y.ToString());
+                TextLabel3.BackColor = Color.Green;
+            }
+        }
+
+        private void TextLabel1_Click(object sender, EventArgs e)
+        {
+            this.TextLabel1.BackColor = Color.Red;
+            this.TextLabel2.BackColor = Color.Black;
+            this.TextLabel3.BackColor = Color.Black;
+            currentSelLabel = this.TextLabel1;
+        }
+
+        private void TextLabel2_Click(object sender, EventArgs e)
+        {
+            this.TextLabel1.BackColor = Color.Black;
+            this.TextLabel2.BackColor = Color.Red;
+            this.TextLabel3.BackColor = Color.Black;
+            currentSelLabel = this.TextLabel2;
+        }
+
+        private void TextLabel3_Click(object sender, EventArgs e)
+        {
+            this.TextLabel1.BackColor = Color.Black;
+            this.TextLabel2.BackColor = Color.Black;
+            this.TextLabel3.BackColor = Color.Red;
+            currentSelLabel = this.TextLabel3;
+        }
     }
     /// <summary>
     /// 显示文本
     /// </summary>
     public class FormTextLabel
     {
+        public Color color { get; set; }
         public string font { get; set; }
         public bool isVertical { get; set; }
         public int opcaity { get; set; }
         public int size { get; set; }
         public string text { get; set; }
-        public int xPos { get; set; }
-        public int yPos { get; set; }
+        public float xPos { get; set; }
+        public float yPos { get; set; }
     }
 
 }
