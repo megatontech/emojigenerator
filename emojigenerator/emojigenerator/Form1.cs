@@ -12,7 +12,7 @@ namespace emojigenerator
         private FormTextLabel label2 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
         private FormTextLabel label3 = new FormTextLabel() { font = "Verdana", color = Color.Black, size = 16, xPos = 0f, yPos = 0f, text = "" };
         private Control currentSelLabel = new Control();
-
+        private Point realImageSize = new Point();
         public UCCU()
         {
             InitializeComponent();
@@ -21,7 +21,8 @@ namespace emojigenerator
             this.pictureBox1.DragDrop += new DragEventHandler(pictureBox1_DragDrop);
             this.pictureBox1.DragEnter += new DragEventHandler(pictureBox1_DragEnter);
         }
-
+        
+        #region Event
         /// <summary>
         /// clear
         /// </summary>
@@ -92,6 +93,8 @@ namespace emojigenerator
                 Image dragImage = Image.FromFile(strfileNames[0]);
                 if (dragImage != null)
                 {
+                    realImageSize.X = dragImage.Width;
+                    realImageSize.Y = dragImage.Height;
                     this.DisposeImage();
                     this.pictureBox1.Image = ZoomImage(dragImage);
                 }
@@ -157,10 +160,81 @@ namespace emojigenerator
             //    this.Refresh();
             //}
         }
+        /// <summary>
+        /// set current sel label position
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (currentSelLabel.Name == this.TextLabel1.Name)
+            {
+                label1.xPos = float.Parse(ProcessXPosition(e.X));
+                label1.yPos = float.Parse(ProcessYPosition(e.Y));
+                TextLabel1.BackColor = Color.Green;
+            }
+            if (currentSelLabel.Name == this.TextLabel2.Name)
+            {
+                currentSelLabel = this.TextLabel2;
+                label2.xPos = float.Parse(e.X.ToString());
+                label2.yPos = float.Parse(e.Y.ToString());
+                TextLabel2.BackColor = Color.Green;
+            }
+            if (currentSelLabel.Name == this.TextLabel3.Name)
+            {
+                currentSelLabel = this.TextLabel3;
+                label3.xPos = float.Parse(e.X.ToString());
+                label3.yPos = float.Parse(e.Y.ToString());
+                TextLabel3.BackColor = Color.Green;
+            }
+        }
+
+        private void TextLabel1_Click(object sender, EventArgs e)
+        {
+            this.TextLabel1.BackColor = Color.Red;
+            this.TextLabel2.BackColor = Color.Black;
+            this.TextLabel3.BackColor = Color.Black;
+            currentSelLabel = this.TextLabel1;
+        }
+
+        private void TextLabel2_Click(object sender, EventArgs e)
+        {
+            this.TextLabel1.BackColor = Color.Black;
+            this.TextLabel2.BackColor = Color.Red;
+            this.TextLabel3.BackColor = Color.Black;
+            currentSelLabel = this.TextLabel2;
+        }
+
+        private void TextLabel3_Click(object sender, EventArgs e)
+        {
+            this.TextLabel1.BackColor = Color.Black;
+            this.TextLabel2.BackColor = Color.Black;
+            this.TextLabel3.BackColor = Color.Red;
+            currentSelLabel = this.TextLabel3;
+        }
+        #endregion
 
         #region Methods
-        
-        
+        public string ProcessXPosition(int pos)
+        {
+            double result = 0;
+            double ratio = Math.Round( (double)pos / 400,4);
+            result = ratio * realImageSize.X;
+            return result.ToString();     
+        }
+        public string ProcessYPosition(int pos)
+        {
+            double result = 0;
+            double ratio = Math.Round((double)pos / 300, 4);
+            result = ratio * realImageSize.Y;
+            return result.ToString();
+        }
+
         /// <summary>
         /// 销毁
         /// </summary>
@@ -216,63 +290,7 @@ namespace emojigenerator
 
 
         #endregion Methods
-        /// <summary>
-        /// set current sel label position
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pictureBox1_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (currentSelLabel.Name == this.TextLabel1.Name)
-            {
-                label1.xPos = float.Parse(e.X.ToString());
-                label1.yPos = float.Parse(e.Y.ToString());
-                TextLabel1.BackColor = Color.Green;
-            }
-            if (currentSelLabel.Name == this.TextLabel2.Name)
-            {
-                currentSelLabel = this.TextLabel2;
-                label2.xPos = float.Parse(e.X.ToString());
-                label2.yPos = float.Parse(e.Y.ToString());
-                TextLabel2.BackColor = Color.Green;
-            }
-            if (currentSelLabel.Name == this.TextLabel3.Name)
-            {
-                currentSelLabel = this.TextLabel3;
-                label3.xPos = float.Parse(e.X.ToString());
-                label3.yPos = float.Parse(e.Y.ToString());
-                TextLabel3.BackColor = Color.Green;
-            }
-        }
-
-        private void TextLabel1_Click(object sender, EventArgs e)
-        {
-            this.TextLabel1.BackColor = Color.Red;
-            this.TextLabel2.BackColor = Color.Black;
-            this.TextLabel3.BackColor = Color.Black;
-            currentSelLabel = this.TextLabel1;
-        }
-
-        private void TextLabel2_Click(object sender, EventArgs e)
-        {
-            this.TextLabel1.BackColor = Color.Black;
-            this.TextLabel2.BackColor = Color.Red;
-            this.TextLabel3.BackColor = Color.Black;
-            currentSelLabel = this.TextLabel2;
-        }
-
-        private void TextLabel3_Click(object sender, EventArgs e)
-        {
-            this.TextLabel1.BackColor = Color.Black;
-            this.TextLabel2.BackColor = Color.Black;
-            this.TextLabel3.BackColor = Color.Red;
-            currentSelLabel = this.TextLabel3;
-        }
+        
     }
     /// <summary>
     /// 显示文本
